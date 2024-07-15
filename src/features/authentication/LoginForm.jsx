@@ -5,10 +5,12 @@ import Input from "../../ui/Input";
 import FormRowVertical from "../../ui/FormRowVertical";
 import { useLogin } from "./useLogin";
 import SpinnerMini from "../../ui/SpinnerMini";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Add this import for icons
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showCredentials, setShowCredentials] = useState(false); // Add this state
   const { login, isLoading } = useLogin();
 
   function handleSubmit(e) {
@@ -23,6 +25,17 @@ function LoginForm() {
         },
       }
     );
+  }
+
+  function handleShowCredentials() {
+    setShowCredentials(!showCredentials);
+    if (!showCredentials) {
+      setEmail("sebojip992@locawin.com");
+      setPassword("test1234");
+    } else {
+      setEmail("");
+      setPassword("");
+    }
   }
 
   return (
@@ -49,6 +62,13 @@ function LoginForm() {
           disabled={isLoading}
         />
       </FormRowVertical>
+      
+      <FormRowVertical>
+        <Button type="button" onClick={handleShowCredentials} disabled={isLoading} size="small">
+          {showCredentials ? <FaEyeSlash /> : <FaEye />} Show Credentials
+        </Button>
+      </FormRowVertical>
+
       <FormRowVertical>
         <Button size="large" disabled={isLoading}>
           {!isLoading ? "Log in" : <SpinnerMini />}
@@ -59,3 +79,4 @@ function LoginForm() {
 }
 
 export default LoginForm;
+
